@@ -35,7 +35,7 @@ fout = open('test.csv', 'w')
 zipcodes = fin.readline().split() # load in zipcodes to a list
 fout.write("Zip_Code, R_Value\n") # write the csv file heading
 
-W = 1/10 # 10 vulnerability categories in the dataset
+W = 1/10  # 10 vulnerability categories in the dataset
 
 for zipcode in zipcodes: # for each zipcode, calculate and write out R value
 	R = Rvalue('Data by Zipcode - Sheet1.csv', zipcode, W)

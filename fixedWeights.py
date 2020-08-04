@@ -1,7 +1,7 @@
 import numpy as num
 import pandas as pd
 
-def Rvalue(fname, zipcode, weight): # function to calculate and return R value
+def Rvalue(fname, zipcode, weights): # function to calculate and return R value
 	df = pd.read_csv(fname)
 
 	maxvalues = {}
@@ -25,20 +25,22 @@ def Rvalue(fname, zipcode, weight): # function to calculate and return R value
 				if correctrow:
 					zipdata[label] = df[label][ind]
 	R = 0
+	count = 0 # holds place in weights
 	for key in zipdata:
-		R += (float(zipdata[key])/maxvalues[key])*weight
+		R += (float(zipdata[key])/maxvalues[key])*float(weights[count])
+		count += 1
 	return R
 
-fin = open ('test.in', 'r')
+fin = open('test.in', 'r')
 fout = open('test.csv', 'w')
+fw = open('weights.in', 'r')
 
 zipcodes = fin.readline().split() # load in zipcodes to a list
 fout.write("Zip_Code, R_Value\n") # write the csv file heading
-
-W = 1/10  # 10 vulnerability categories in the dataset
+weights = fw.readline().split() # load in weights to a list
 
 for zipcode in zipcodes: # for each zipcode, calculate and write out R value
-	R = Rvalue('Data by Zipcode - Sheet1.csv', zipcode, W)
+	R = Rvalue('Data by Zipcode - Sheet1.csv', zipcode, weights)
 	fout.write(str(zipcode) + ", " + str(R) + '\n')
 
 fout.close()
